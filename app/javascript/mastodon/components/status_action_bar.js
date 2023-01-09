@@ -27,6 +27,7 @@ const messages = defineMessages({
   cancel_reblog_private: { id: 'status.cancel_reblog_private', defaultMessage: 'Unboost' },
   cannot_reblog: { id: 'status.cannot_reblog', defaultMessage: 'This post cannot be boosted' },
   favourite: { id: 'status.favourite', defaultMessage: 'Favourite' },
+  microtransaction: { id: 'status.microtransaction', defaultMessage: 'Tip @{name}' },
   bookmark: { id: 'status.bookmark', defaultMessage: 'Bookmark' },
   removeBookmark: { id: 'status.remove_bookmark', defaultMessage: 'Remove bookmark' },
   open: { id: 'status.open', defaultMessage: 'Expand this status' },
@@ -85,6 +86,8 @@ class StatusActionBar extends ImmutablePureComponent {
     onFilter: PropTypes.func,
     onAddFilter: PropTypes.func,
     onInteractionModal: PropTypes.func,
+    onTipModal: PropTypes.func,
+    tipUrl: PropTypes.string,
     withDismiss: PropTypes.bool,
     withCounters: PropTypes.bool,
     scrollKey: PropTypes.string,
@@ -136,6 +139,14 @@ class StatusActionBar extends ImmutablePureComponent {
     } else {
       this.props.onInteractionModal('reblog', this.props.status);
     }
+  }
+
+  handleGiveTipClick = () => {
+    this.props.onTipModal('givetip', this.props.status);
+  }
+
+  handleInviteTipClick = () => {
+    this.props.onTipModal('invitetip', this.props.status);
   }
 
   handleBookmarkClick = () => {
@@ -357,11 +368,35 @@ class StatusActionBar extends ImmutablePureComponent {
       <IconButton className='status__action-bar__button' title={intl.formatMessage(messages.hide)} icon='eye' onClick={this.handleHideClick} />
     );
 
+    let uriText = '';
+    if (!writtenByMe) {
+      const fields = account.get('fields');
+      if (fields && fields.size > 0) {
+        fields.map((pair) => {
+          if (pair.get('name') === 'reddcoin') {
+            uriText = `reddcoin:${pair.get('value')}?label=Tip sent to ${account.get('username')}`;
+          }
+        });
+      }
+    }
+
+    let tipButton;
+    if (uriText.length > 0 && !writtenByMe) {
+      tipButton = (
+        <IconButton className='status__action-bar__button btc-icon' active title={intl.formatMessage(messages.microtransaction, { name: account.get('username') })} href={uriText} icon='btc' onClick={this.handleGiveTipClick} />
+      );
+    } else if (uriText.length === 0 && !writtenByMe) {
+      tipButton = (
+        <IconButton className='status__action-bar__button btc-icon' title={intl.formatMessage(messages.microtransaction, { name: account.get('username') })} href={uriText} icon='btc' onClick={this.handleInviteTipClick} />
+      );
+    }
+
     return (
       <div className='status__action-bar'>
         <IconButton className='status__action-bar__button' title={replyTitle} icon={status.get('in_reply_to_account_id') === status.getIn(['account', 'id']) ? 'reply' : replyIcon} onClick={this.handleReplyClick} counter={status.get('replies_count')} obfuscateCount />
         <IconButton className={classNames('status__action-bar__button', { reblogPrivate })} disabled={!publicStatus && !reblogPrivate} active={status.get('reblogged')} title={reblogTitle} icon='retweet' onClick={this.handleReblogClick} counter={withCounters ? status.get('reblogs_count') : undefined} />
         <IconButton className='status__action-bar__button star-icon' animate active={status.get('favourited')} title={intl.formatMessage(messages.favourite)} icon='star' onClick={this.handleFavouriteClick} counter={withCounters ? status.get('favourites_count') : undefined} />
+        {tipButton}
         <IconButton className='status__action-bar__button bookmark-icon' disabled={!signedIn} active={status.get('bookmarked')} title={intl.formatMessage(messages.bookmark)} icon='bookmark' onClick={this.handleBookmarkClick} />
 
         {shareButton}

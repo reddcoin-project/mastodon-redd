@@ -100,6 +100,7 @@ class Header extends ImmutablePureComponent {
     onEditAccountNote: PropTypes.func.isRequired,
     onChangeLanguages: PropTypes.func.isRequired,
     onInteractionModal: PropTypes.func.isRequired,
+    onTipModal: PropTypes.func.isRequired,
     onOpenAvatar: PropTypes.func.isRequired,
     intl: PropTypes.object.isRequired,
     domain: PropTypes.string.isRequired,
@@ -294,9 +295,9 @@ class Header extends ImmutablePureComponent {
       if ((permissions & PERMISSION_MANAGE_USERS) === PERMISSION_MANAGE_USERS) {
         menu.push({ text: intl.formatMessage(messages.admin_account, { name: account.get('username') }), href: `/admin/accounts/${account.get('id')}` });
       }
-        if (isRemote && (permissions & PERMISSION_MANAGE_FEDERATION) === PERMISSION_MANAGE_FEDERATION) {
-          menu.push({ text: intl.formatMessage(messages.admin_domain, { domain: remoteDomain }), href: `/admin/instances/${remoteDomain}` });
-        }
+      if (isRemote && (permissions & PERMISSION_MANAGE_FEDERATION) === PERMISSION_MANAGE_FEDERATION) {
+        menu.push({ text: intl.formatMessage(messages.admin_domain, { domain: remoteDomain }), href: `/admin/instances/${remoteDomain}` });
+      }
     }
 
     const content         = { __html: account.get('note_emojified') };

@@ -170,6 +170,10 @@ export function InteractionModal () {
   return import(/*webpackChunkName: "modals/interaction_modal" */'../../interaction_modal');
 }
 
+export function TipModal () {
+  return import(/*webpackChunkName: "modals/tip_modal" */'../../tip_modal');
+}
+
 export function SubscribedLanguagesModal () {
   return import(/*webpackChunkName: "modals/subscribed_languages_modal" */'../../subscribed_languages_modal');
 }

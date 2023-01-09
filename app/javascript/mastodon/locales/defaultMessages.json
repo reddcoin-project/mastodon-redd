@@ -2637,6 +2637,43 @@
   {
     "descriptors": [
       {
+        "defaultMessage": "Tip {name}'s post.",
+        "id": "tip_modal.title.tip"
+      },
+      {
+        "defaultMessage": "With a Reddcoin wallet address, you can tip this post and reward the author.",
+        "id": "tip_modal.description.tip"
+      },
+      {
+        "defaultMessage": "Since Reddcoin is decentralized peer-to-peer network, you can use your existing Reddcoin wallet to send reddcoin or create a wallet and fund your aaccount to get started.",
+        "id": "tip_modal.preamble"
+      },
+      {
+        "defaultMessage": "With Wallet.",
+        "id": "tip_modal.with_wallet"
+      },
+      {
+        "defaultMessage": "Without Wallet.",
+        "id": "tip_modal.without_wallet"
+      },
+      {
+        "defaultMessage": "Visit reddcoin.com and download a wallet to get started.",
+        "id": "tip_modal.without_wallet_instructions"
+      },
+      {
+        "defaultMessage": "Tip {name}",
+        "id": "tip_modal.name"
+      },
+      {
+        "defaultMessage": "Message {name}",
+        "id": "tip_modal.send_message"
+      }
+     ],
+     "path": "app/javascript/mastodon/features/tip_modal/index.json"
+  },
+  {
+    "descriptors": [
+      {
         "defaultMessage": "Keyboard Shortcuts",
         "id": "keyboard_shortcuts.heading"
       },

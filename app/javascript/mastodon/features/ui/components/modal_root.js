@@ -23,6 +23,7 @@ import {
   CompareHistoryModal,
   FilterModal,
   InteractionModal,
+  TipModal,
   SubscribedLanguagesModal,
   ClosedRegistrationsModal,
 } from 'mastodon/features/ui/util/async-components';
@@ -47,6 +48,7 @@ const MODAL_COMPONENTS = {
   'FILTER': FilterModal,
   'SUBSCRIBED_LANGUAGES': SubscribedLanguagesModal,
   'INTERACTION': InteractionModal,
+  'TIP': TipModal,
   'CLOSED_REGISTRATIONS': ClosedRegistrationsModal,
 };
 

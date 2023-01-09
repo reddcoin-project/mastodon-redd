@@ -245,6 +245,14 @@ const mapDispatchToProps = (dispatch, { intl, contextType }) => ({
     }));
   },
 
+  onTipModal (type, status) {
+    dispatch(openModal('TIP', {
+      type,
+      accountId: status.getIn(['account', 'id']),
+      status,
+    }));
+  },
+
 });
 
 export default injectIntl(connect(makeMapStateToProps, mapDispatchToProps)(Status));

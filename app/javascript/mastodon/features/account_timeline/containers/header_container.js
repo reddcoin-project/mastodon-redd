@@ -76,6 +76,14 @@ const mapDispatchToProps = (dispatch, { intl }) => ({
     }));
   },
 
+  onTipModal (account) {
+    dispatch(openModal('TIP', {
+      type: 'tip',
+      accountId: account.get('id'),
+      url: account.get('url'),
+    }));
+  },
+
   onBlock (account) {
     if (account.getIn(['relationship', 'blocking'])) {
       dispatch(unblockAccount(account.get('id')));
