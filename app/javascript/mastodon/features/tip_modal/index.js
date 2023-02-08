@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import Button from 'mastodon/components/button';
 import Icon from 'mastodon/components/icon';
 import { closeModal } from 'mastodon/actions/modal';
-import { directCompose } from 'mastodon/actions/compose';
+import { directCompose, replyCompose } from 'mastodon/actions/compose';
 
 const mapStateToProps = (state, { accountId }) => ({
   displayNameHtml: state.getIn(['accounts', accountId, 'display_name_html']),
@@ -17,10 +17,10 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(closeModal());
     dispatch(directCompose(account, router));
   },
-  onTipClick (url) {
+  onTipClick (status, router, url) {
     dispatch(closeModal('TIP'));
     window.open(url);
-    //dispatch(directCompose(account, router));
+    dispatch(replyCompose(status, router));
   },
 });
 
@@ -41,7 +41,7 @@ class TipModal extends React.PureComponent {
   };
 
   handleTipClick = url => () => {
-    this.props.onTipClick(url);
+    this.props.onTipClick(this.props.status, this.context.router.history, url);
   };
 
   handleDirectClick = () => {
